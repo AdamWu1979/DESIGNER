@@ -23,7 +23,7 @@ Let us assume we are in a directory that contains 3 diffusion datasets, dwi1.nii
 ```bash
 designer dwi1.nii.gz,dwi2.nii.gz,dwi3.nii.gz designer_params \
 -denoise \
--rpg -pf 6/8 -dim 2 \
+-degibbs \
 -rician \
 -mask \
 -eddy -rpe_pair dwi_rpe.nii.gz -pe_dir AP \
