@@ -50,7 +50,6 @@ def usage(cmdline): #pylint: disable=unused-variable
     options.add_argument('-denoise', action='store_true', help='Perform dwidenoise')
     options.add_argument('-extent', metavar=('<size>'), help='Denoising extent. Default is 5,5,5')
     options.add_argument('-degibbs', action='store_true', help='Performs (Kellner) Gibbs artifact correction')
-    #options.add_argument('-rpg', action='store_true', help='Perform (RPG) Gibbs artifact correction. Must include PF factor with -pf (e.g. 6/8, 7/8) and PF dimension -dim (1, 2 or 3 for i, j  or k respectively).')
     options.add_argument('-rician', action='store_true', help='Perform Rician bias correction')
     options.add_argument('-rician_lowsnr', metavar=('<b-value where SNR=2>'), help='Perform Rician bias correction specifying the b-value where snr<2')
     options.add_argument('-prealign', action='store_true', help='If there are multiple input diffusion series, do rigid alignment prior to eddy to maximize motion correction performance')
@@ -218,20 +217,6 @@ def execute(): #pylint: disable=unused-variable
         print("...Kellner degibbsing...")
         run.command('mrdegibbs -nshifts 20 -minW 1 -maxW 3 working.mif dwigc.mif')
         run.command('mrconvert -force dwigc.mif working.mif')
-
-    # rpg gibbs artifact correction
-    if app.ARGS.rpg:
-        # convert working.mif to nii
-        run.command('mrconvert -export_grad_fsl working.bvec working.bval working.mif working.nii')
-        print("...Beginning RPG degibbsing")
-        os.chdir(designer_root)
-        eng = matlab.engine.start_matlab()
-        eng.addpath(os.path.join(DKI_root,'utils'), nargout=0)
-        eng.runrpg(app.ARGS.pf,int(app.ARGS.dim), path.to_scratch('',True), DKI_root,nargout=0)
-        eng.quit()
-        app.goto_scratch_dir()
-        #convert gibbs corrected nii to .mif
-        run.command('mrconvert -force -fslgrad working.bvec working.bval working_rpg.nii working.mif')
         
     # pre-eddy alignment for multiple input series
     if app.ARGS.prealign:
