@@ -50,7 +50,7 @@ def usage(cmdline): #pylint: disable=unused-variable
     options.add_argument('-denoise', action='store_true', help='Perform dwidenoise')
     options.add_argument('-extent', metavar=('<size>'), help='Denoising extent. Default is 5,5,5')
     options.add_argument('-degibbs', action='store_true', help='Performs (Kellner) Gibbs artifact correction')
-    options.add_argument('-rpg', action='store_true', help='Perform (RPG) Gibbs artifact correction. Must include PF factor with -pf (e.g. 6/8, 7/8) and PF dimension -dim (1, 2 or 3 for i, j  or k respectively).')
+    #options.add_argument('-rpg', action='store_true', help='Perform (RPG) Gibbs artifact correction. Must include PF factor with -pf (e.g. 6/8, 7/8) and PF dimension -dim (1, 2 or 3 for i, j  or k respectively).')
     options.add_argument('-rician', action='store_true', help='Perform Rician bias correction')
     options.add_argument('-rician_lowsnr', metavar=('<b-value where SNR=2>'), help='Perform Rician bias correction specifying the b-value where snr<2')
     options.add_argument('-prealign', action='store_true', help='If there are multiple input diffusion series, do rigid alignment prior to eddy to maximize motion correction performance')
