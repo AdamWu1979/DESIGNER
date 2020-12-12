@@ -353,7 +353,7 @@ def execute(): #pylint: disable=unused-variable
             run.command('dwidenoise -noise lowbnoisemap.mif -estimator Exp2 dwi.mif dwitmp.mif')
             app.cleanup('dwitmp.mif')
             run.command('mrcalc working.mif 2 -pow lowbnoisemap.mif 2 -pow -sub -abs -sqrt - | mrcalc - -finite - 0 -if dwirc.mif')
-            run.command('mrconvert -force dwirc.mif working.mif')
+        run.command('mrconvert -force dwirc.mif working.mif')
     elif app.ARGS.rician_lowsnr:
         print("...Beginning Rician correction")
         bvalu = np.unique(np.around(bval, decimals=-1))
